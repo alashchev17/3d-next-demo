@@ -22,7 +22,7 @@ export default function OrthographicCameraComponent() {
     }
 
     window.addEventListener('resize', handleResize)
-    handleResize() // Initial call to set up the camera with the correct aspect ratio
+    handleResize()
 
     return () => window.removeEventListener('resize', handleResize)
   }, [size])
