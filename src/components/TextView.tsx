@@ -1,21 +1,27 @@
 import { RefObject, Dispatch, SetStateAction } from 'react'
-import { Text3D } from '@react-three/drei'
+import { Text3D, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 
 type TextViewProps = {
   textWidth: number
+  textHeight: number
   textRef: RefObject<THREE.Mesh<THREE.BufferGeometry<THREE.NormalBufferAttributes>>>
   text: string
   scaleFactor: number
   setTextWidth: Dispatch<SetStateAction<number>>
+  setTextHeight: Dispatch<SetStateAction<number>>
 }
 
-export default function TextView({ textRef, textWidth, text, scaleFactor, setTextWidth }: TextViewProps) {
+export default function TextView({ textRef, textWidth, textHeight, text, scaleFactor, setTextWidth, setTextHeight }: TextViewProps) {
+  const texture = useTexture('/assets/textures/tile.png')
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+  texture.repeat.set(20, 20)
   useFrame(() => {
     if (textRef.current) {
       textRef.current.geometry.computeBoundingBox()
       setTextWidth((textRef.current.geometry.boundingBox!.max.x - textRef.current.geometry.boundingBox!.min.x) * scaleFactor)
+      setTextHeight((textRef.current.geometry.boundingBox!.max.y - textRef.current.geometry.boundingBox!.min.y) * scaleFactor)
     }
   })
 
@@ -25,12 +31,12 @@ export default function TextView({ textRef, textWidth, text, scaleFactor, setTex
       font={'/assets/fonts/KTF-Forma-Bold_Regular.json'}
       bevelEnabled={true}
       curveSegments={12}
-      letterSpacing={-0.05}
-      position={[-textWidth / 2, 0, 0]}
-      scale={[scaleFactor, scaleFactor, scaleFactor]}
+      letterSpacing={-0.08}
+      position={[-textWidth / 2, -textHeight / 2, 0]}
+      scale={[1, 1, 1]}
     >
       {text}
-      <meshNormalMaterial />
+      <meshStandardMaterial map={texture} roughness={0} />
     </Text3D>
   )
 }
