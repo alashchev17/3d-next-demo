@@ -31,14 +31,14 @@ export default function OrthographicCameraComponent() {
       ref={cameraRef}
       makeDefault
       manual
-      zoom={40}
+      zoom={1}
       top={100}
       bottom={-100}
       left={-255}
       right={255}
-      near={1}
-      far={200}
-      position={[0, 0, 10]}
+      near={0}
+      far={20000}
+      position={[0, 0, 1000]}
       onUpdate={(self) => {
         const { zoom } = self
         console.log(zoom)

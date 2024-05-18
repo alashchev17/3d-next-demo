@@ -20,8 +20,11 @@ export default function TextView({ textRef, textWidth, textHeight, text, scaleFa
   useFrame(() => {
     if (textRef.current) {
       textRef.current.geometry.computeBoundingBox()
+      const aspectRatio = window.innerWidth / window.innerHeight
       setTextWidth((textRef.current.geometry.boundingBox!.max.x - textRef.current.geometry.boundingBox!.min.x) * scaleFactor)
+      // setTextWidth(window.innerWidth)
       setTextHeight((textRef.current.geometry.boundingBox!.max.y - textRef.current.geometry.boundingBox!.min.y) * scaleFactor)
+      // setTextHeight(window.innerWidth / aspectRatio)
     }
   })
 
@@ -33,7 +36,7 @@ export default function TextView({ textRef, textWidth, textHeight, text, scaleFa
       curveSegments={12}
       letterSpacing={-0.08}
       position={[-textWidth / 2, -textHeight / 2, 0]}
-      scale={[1, 1, 1]}
+      scale={[scaleFactor, scaleFactor, scaleFactor]}
     >
       {text}
       <meshStandardMaterial map={texture} roughness={0} />
