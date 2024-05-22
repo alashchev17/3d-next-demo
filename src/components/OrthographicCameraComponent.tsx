@@ -14,10 +14,15 @@ export default function OrthographicCameraComponent() {
       }
 
       const aspect = size.width / size.height
-      cameraRef.current.left = -aspect * 100
-      cameraRef.current.right = aspect * 100
-      cameraRef.current.top = 100
-      cameraRef.current.bottom = -100
+      const frustumHeight = 100
+      const frustumWidth = frustumHeight * aspect
+
+      // Set the camera bounds to ensure (0, 0, 0) is in the bottom-left corner
+      cameraRef.current.left = 0
+      cameraRef.current.right = frustumWidth
+      cameraRef.current.top = frustumHeight
+      cameraRef.current.bottom = 0
+      cameraRef.current.position.set(0, 0, 1000)
       cameraRef.current.updateProjectionMatrix()
     }
 
@@ -26,22 +31,17 @@ export default function OrthographicCameraComponent() {
 
     return () => window.removeEventListener('resize', handleResize)
   }, [size])
+
   return (
     <OrthographicCamera
       ref={cameraRef}
       makeDefault
       manual
       zoom={1}
-      top={100}
-      bottom={-100}
-      left={-255}
-      right={255}
       near={0}
-      far={20000}
-      position={[0, 0, 1000]}
+      far={2000}
       onUpdate={(self) => {
-        const { zoom } = self
-        console.log(zoom)
+        self.updateProjectionMatrix()
       }}
     />
   )

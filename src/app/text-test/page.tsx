@@ -13,7 +13,7 @@ export default function TextTest() {
   const cameraRef = useRef<THREE.OrthographicCamera>(null)
   const [textWidth, setTextWidth] = useState(0)
   const [textHeight, setTextHeight] = useState(0)
-  const [scaleFactor, setScaleFactor] = useState(175)
+  const [scaleFactor, setScaleFactor] = useState(60)
 
   useEffect(() => {
     console.log(`[INFO]: textWidth: ${textWidth}`)
@@ -21,12 +21,6 @@ export default function TextTest() {
 
   useEffect(() => {
     console.log(`[INFO]: textHeight: ${textHeight}`)
-    // if (!canvasDivRef.current) {
-    //   return
-    // }
-    // if (textHeight !== 0) {
-    //   canvasDivRef.current.style.height = `${textHeight}px`
-    // }
   }, [textHeight])
 
   return (
@@ -39,24 +33,10 @@ export default function TextTest() {
       }}
     >
       <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          textAlign: 'center',
-          width: '100%',
-          height: '75%',
-        }}
-      >
-        content
-      </div>
-      <div
         ref={canvasDivRef}
         style={{
           width: '100%',
-          height: '25%',
-          // border: '1px solid red',
+          height: '100%',
           position: 'relative',
         }}
       >
@@ -79,15 +59,17 @@ export default function TextTest() {
           <OrthographicCameraComponent />
           <OrbitControls enableZoom={false} enablePan={true} />
           <ambientLight color="#ffffff" intensity={15} />
-          {/* <gridHelper args={[50, 50]} /> */}
+          <gridHelper args={[10000, 100]} />
+          <axesHelper args={[500]} />
           <TextView
-            text="Cith"
+            text="Taubman"
             textWidth={textWidth}
             textHeight={textHeight}
             setTextHeight={setTextHeight}
             setTextWidth={setTextWidth}
             textRef={textRef}
             scaleFactor={scaleFactor}
+            setScaleFactor={setScaleFactor}
           />
         </Canvas>
       </div>
