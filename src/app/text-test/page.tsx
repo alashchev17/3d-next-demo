@@ -62,7 +62,7 @@ export default function TextTest() {
           <gridHelper args={[10000, 100]} />
           <axesHelper args={[500]} />
           <TextView
-            text="Taubman"
+            text="taubman"
             textWidth={textWidth}
             textHeight={textHeight}
             setTextHeight={setTextHeight}

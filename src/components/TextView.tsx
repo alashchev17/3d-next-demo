@@ -35,7 +35,7 @@ export default function TextView({ textRef, textWidth, textHeight,setScaleFactor
   return (
     <Text3D
       ref={textRef}
-      font={'/assets/fonts/KTF-Forma-Bold_Regular.json'}
+      font={'/assets/fonts/KTF-Forma-Bold_Regular-2.json'}
       bevelEnabled={true}
       curveSegments={12}
       letterSpacing={-0.08}
